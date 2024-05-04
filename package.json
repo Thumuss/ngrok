@@ -11,10 +11,8 @@
     "test": "mocha --exit"
   },
   "files": [
-    "bin/ngrok",
     "index.js",
     "index.d.ts",
-    "postinstall.js",
     "src/autthoken.js",
     "src/client.js",
     "src/config.js",
