@@ -10,7 +10,7 @@ declare module "ngrok" {
    *
    * @param options Optional. Port number or options.
    */
-  export function connect(options?: number | Ngrok.Options): Promise<string>;
+  export function connect(options?: number | Ngrok.Options): Promise<void>;
 
   /**
    * Stops a tunnel, or all of them if no URL is passed.
@@ -99,43 +99,9 @@ declare module "ngrok" {
       [customOption: string]: any;
 
       /**
-       * The tunnel type to put in place.
-       *
-       * @default 'http'
-       */
-      proto?: Protocol;
-
-      /**
-       * Port or network address to redirect traffic on.
-       *
-       * @default opts.port || opts.host || 80
-       */
-      addr?: string | number;
-
-      /**
-       * HTTP Basic authentication for tunnel.
-       *
-       * @default opts.httpauth
-       */
-      auth?: string;
-
-      /**
-       * Reserved tunnel name (e.g. https://alex.ngrok.io)
-       */
-      subdomain?: string;
-
-      /**
        * Your authtoken from ngrok.com
        */
       authtoken?: string;
-
-      /**
-       * One of ngrok regions.
-       * Note: region used in first tunnel will be used for all next tunnels too.
-       *
-       * @default 'us'
-       */
-      region?: Region;
 
       /**
        * Custom path for ngrok config file.
