@@ -8,9 +8,7 @@
   },
   "types": "index.d.ts",
   "scripts": {
-    "test": "mocha --exit",
-    "postinstall": "node ./postinstall.js",
-    "postupdate": "node ./postinstall.js"
+    "test": "mocha --exit"
   },
   "files": [
     "bin/ngrok",
