@@ -4,7 +4,6 @@ const { NgrokClient, NgrokClientError } = require("./src/client");
 const { getProcess, killProcess } = require("./src/process");
 const { getVersion } = require("./src/version");
 const { setAuthtoken } = require("./src/authtoken");
-const { upgradeConfig } = require("./src/config");
 
 const {
   defaults,
@@ -42,7 +41,7 @@ async function connect(opts) {
   }
   processUrl = await getProcess(globalOpts);
   ngrokClient = new NgrokClient(processUrl);
-  retur;
+  return;
 }
 
 
@@ -101,7 +100,6 @@ module.exports = {
   authtoken: setAuthtoken,
   defaultConfigPath,
   oldDefaultConfigPath,
-  upgradeConfig,
   kill,
   getUrl,
   getApi,

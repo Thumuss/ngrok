@@ -2,15 +2,14 @@ import { Response } from "got";
 
 declare module "ngrok" {
   /**
-   * Creates a ngrok tunnel.
+   * Creates an interface for creating tunnels
    * E.g:
-   *     const url = await ngrok.connect(); // https://757c1652.ngrok.io -> http://localhost:80
-   *     const url = await ngrok.connect(9090); // https://757c1652.ngrok.io -> http://localhost:9090
-   *     const url = await ngrok.connect({ proto: 'tcp', addr: 22 }); // tcp://0.tcp.ngrok.io:48590
+   *     await ngrok.connect();
+   *     const api = ngrok.getApi()
    *
    * @param options Optional. Port number or options.
    */
-  export function connect(options?: number | Ngrok.Options): Promise<void>;
+  export function connect(options?: number | Ngrok.ConnectOptions): Promise<void>;
 
   /**
    * Stops a tunnel, or all of them if no URL is passed.
@@ -90,6 +89,38 @@ declare module "ngrok" {
     type TunnelProtocol = "https" | "http" | "tcp" | "tls";
     type Region = "us" | "eu" | "au" | "ap" | "sa" | "jp" | "in";
 
+    interface ConnectOptions {
+      /**
+       * Your authtoken from ngrok.com
+       */
+      authtoken?: string;
+
+      /**
+       * Custom path for ngrok config file.
+       */
+      configPath?: string;
+
+      /**
+       * Custom binary path, eg for prod in electron
+       */
+      binPath?: (defaultPath: string) => string;
+
+      /**
+       * Callback called when ngrok logs an event.
+       */
+      onLogEvent?: (logEventMessage: string) => any;
+
+      /**
+       * Callback called when session status is changed.
+       * When connection is lost, ngrok will keep trying to reconnect.
+       */
+      onStatusChange?: (status: "connected" | "closed") => any;
+
+      /**
+       * Callback called when ngrok host process is terminated.
+       */
+      onTerminated?: () => any;
+    }
     interface Options {
       /**
        * Other "custom", indirectly-supported ngrok process options.
@@ -99,9 +130,43 @@ declare module "ngrok" {
       [customOption: string]: any;
 
       /**
+       * The tunnel type to put in place.
+       *
+       * @default 'http'
+       */
+      proto?: Protocol;
+
+      /**
+       * Port or network address to redirect traffic on.
+       *
+       * @default opts.port || opts.host || 80
+       */
+      addr?: string | number;
+
+      /**
+       * HTTP Basic authentication for tunnel.
+       *
+       * @default opts.httpauth
+       */
+      auth?: string;
+
+      /**
+       * Reserved tunnel name (e.g. https://alex.ngrok.io)
+       */
+      subdomain?: string;
+
+      /**
        * Your authtoken from ngrok.com
        */
       authtoken?: string;
+
+      /**
+       * One of ngrok regions.
+       * Note: region used in first tunnel will be used for all next tunnels too.
+       *
+       * @default 'us'
+       */
+      region?: Region;
 
       /**
        * Custom path for ngrok config file.
