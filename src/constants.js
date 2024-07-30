@@ -1,4 +1,4 @@
-const { join, delimiter, dirname, resolve } = require("path");
+const { delimiter, dirname, resolve } = require("path");
 const platform = require("os").platform();
 const fs = require("fs");
 
